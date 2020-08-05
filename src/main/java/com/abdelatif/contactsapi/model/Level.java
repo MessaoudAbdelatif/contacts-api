@@ -9,10 +9,11 @@ public enum Level {
 
   private final String value;
 
-  Level(String value){
+  Level(String value) {
     this.value = value;
   }
-  public String getValue(){
+
+  public String getValue() {
     return value;
   }
 }
