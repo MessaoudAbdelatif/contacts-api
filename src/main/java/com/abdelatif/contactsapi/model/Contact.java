@@ -4,10 +4,14 @@ package com.abdelatif.contactsapi.model;
 import com.abdelatif.contactsapi.validation.FieldMatch;
 import com.abdelatif.contactsapi.validation.ValidPhoneNum;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -52,4 +56,12 @@ public class Contact implements Serializable {
   private String confirmedPassword;
 
   private Boolean enable;
+
+  @ManyToMany
+  @JoinTable(
+      name = "contact_skills",
+      joinColumns = {@JoinColumn(name = "contact_id")},
+      inverseJoinColumns = {@JoinColumn(name = "skill_id")}
+  )
+  private List<Skill> skills;
 }
