@@ -7,11 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequestDto {
+public class NotificationEmailDto {
 
-  private String email;
-  private String username;
-  private String password;
-  private String confirmedPassword;
+  private String subject;
+  private String recipient;
+  private String body;
 
 }

@@ -1,12 +1,10 @@
 package com.abdelatif.contactsapi.model;
 
 
-import com.abdelatif.contactsapi.validation.FieldMatch;
 import com.abdelatif.contactsapi.validation.ValidPhoneNum;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,17 +15,12 @@ import javax.persistence.ManyToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.validator.constraints.UniqueElements;
 
-@FieldMatch.List({
-    @FieldMatch(first = "password", second = "confirmedPassword", errorMessage = "Confirm password is different from the password !!")})
 
 @Data
 @AllArgsConstructor
@@ -38,11 +31,7 @@ public class Contact implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long contactId;
-
-  @NotBlank
-  @UniqueElements(message = "This username is already used !")
-  private String username;
+  private Long id;
 
   @NotNull
   @NotBlank(message = "Firstname is required !")
@@ -67,20 +56,8 @@ public class Contact implements Serializable {
   @ValidPhoneNum(message = "Valid mobile phone number required !")
   private String mobileNumber;
 
-  @NotBlank(message = "Password is required, minimum size 5 characters !")
-  @Size(min = 5, max = 50)
-  private String password;
-
-  private String confirmedPassword;
-
-  @CreationTimestamp
-  @Column(updatable = false)
-  private Timestamp createdDate;
-
   @UpdateTimestamp
   private Timestamp lastModifiedDate;
-
-  private boolean enable;
 
   @ManyToMany
   @JoinTable(
