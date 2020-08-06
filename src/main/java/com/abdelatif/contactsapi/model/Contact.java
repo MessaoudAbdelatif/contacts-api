@@ -24,6 +24,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.validator.constraints.UniqueElements;
 
 @FieldMatch.List({
     @FieldMatch(first = "password", second = "confirmedPassword", errorMessage = "Confirm password is different from the password !!")})
@@ -38,6 +39,10 @@ public class Contact implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long contactId;
+
+  @NotBlank
+  @UniqueElements(message = "This username is already used !")
+  private String username;
 
   @NotNull
   @NotBlank(message = "Firstname is required !")
@@ -66,7 +71,6 @@ public class Contact implements Serializable {
   @Size(min = 5, max = 50)
   private String password;
 
-  @NotBlank
   private String confirmedPassword;
 
   @CreationTimestamp
