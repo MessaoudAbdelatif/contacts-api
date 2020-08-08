@@ -32,15 +32,14 @@ public class UserApi implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NotBlank
-  //@UniqueElements(message = "This username is already used !")
+  @NotBlank(message = "Valid username is required !")
+  //@UniqueUsername(message = "Sorry this username is already used !")
+  @Column(unique = true, updatable = false)
   private String username;
 
   @NotBlank(message = "Password is required, minimum size 5 characters !")
   @Size(min = 5, message = "Password is required, minimum size 5 characters !")
   private String password;
-
-  private String confirmedPassword;
 
   @NotNull
   @Email(message = "Valid Email is required !")
