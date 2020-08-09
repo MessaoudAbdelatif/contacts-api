@@ -1,6 +1,6 @@
 package com.abdelatif.contactsapi.service;
 
-import com.abdelatif.contactsapi.Exception.ContactApiException;
+import com.abdelatif.contactsapi.exception.ContactApiException;
 import com.abdelatif.contactsapi.dto.NotificationEmailDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

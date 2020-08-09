@@ -1,4 +1,4 @@
-package com.abdelatif.contactsapi.Exception;
+package com.abdelatif.contactsapi.exception;
 
 public class ContactApiException extends RuntimeException {
 

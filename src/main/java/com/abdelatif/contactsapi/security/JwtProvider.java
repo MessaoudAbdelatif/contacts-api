@@ -1,6 +1,9 @@
 package com.abdelatif.contactsapi.security;
 
-import com.abdelatif.contactsapi.Exception.ContactApiException;
+import static io.jsonwebtoken.Jwts.parser;
+
+import com.abdelatif.contactsapi.exception.ContactApiException;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,5 +60,17 @@ public class JwtProvider {
       throw new ContactApiException("Exception occured while retrieving public key from keystore",
           e);
     }
+  }
+
+  public boolean validateToken(String jwtFromReq){
+    parser().setSigningKey(getPublicKey()).parseClaimsJws(jwtFromReq);
+    return true;
+  }
+
+  public String getUsernameFromJwt(String token){
+    Claims claims = parser().setSigningKey(getPublicKey())
+        .parseClaimsJws(token)
+        .getBody();
+    return claims.getSubject();
   }
 }

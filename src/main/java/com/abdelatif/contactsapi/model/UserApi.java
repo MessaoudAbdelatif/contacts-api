@@ -51,6 +51,6 @@ public class UserApi implements Serializable {
 
   private boolean enable;
 
-  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
   private Contact contact;
 }
