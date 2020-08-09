@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserApiDao extends JpaRepository<UserApi, Long> {
   Optional<UserApi> findByUsername(String username);
+  Optional<UserApi> findByContact_Id(Long id);
 
 }

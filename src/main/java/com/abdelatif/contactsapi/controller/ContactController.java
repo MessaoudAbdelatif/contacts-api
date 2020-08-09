@@ -56,8 +56,10 @@ public class ContactController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity deleteContact(@PathVariable Long id) {
+  public ResponseEntity<String> deleteContact(@PathVariable Long id) {
     contactService.delete(id);
-    return new ResponseEntity(HttpStatus.NO_CONTENT);
+    return ResponseEntity
+        .status(HttpStatus.NO_CONTENT)
+        .body("Contact information removed successfully !");
   }
 }

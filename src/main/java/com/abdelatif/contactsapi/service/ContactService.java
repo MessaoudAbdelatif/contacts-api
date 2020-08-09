@@ -64,9 +64,10 @@ public class ContactService {
 
   @Transactional
   public void delete(Long id) {
-    Optional<Contact> contact = contactDao.findById(id);
-    if (contact.isPresent()) {
-      contactDao.deleteById(id);
+    Optional<UserApi> userApiSelected = userApiDao.findByContact_Id(id);
+    if (userApiSelected.isPresent()) {
+      userApiSelected.get()
+          .setContact(null); //Hibernate will remove the contact raw linked Cascade ALL.
     } else {
       throw new ContactApiException("Can not delete ! no contact found with this ID : " + id);
     }
