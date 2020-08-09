@@ -18,13 +18,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @AllArgsConstructor
 @Slf4j
+@Transactional
 public class SkillService {
 
   private final SkillDao skillDao;
   private final SkillMapper skillMapper;
   private final AuthService authService;
 
-  @Transactional
+
   public SkillDto saveForCurrentContact(SkillDto skillDto) {
     Skill saveSkill = skillDao.save(skillMapper.mapToSkill(skillDto));
     UserApi currentUser = authService.getCurrentUser();
@@ -35,7 +36,7 @@ public class SkillService {
     return skillMapper.mapToSkillDto(saveSkill);
   }
 
-  @Transactional
+
   public SkillDto save(SkillDto skillDto) {
     Skill saveSkill = skillDao.save(skillMapper.mapToSkill(skillDto));
     return skillMapper.mapToSkillDto(saveSkill);
@@ -49,13 +50,14 @@ public class SkillService {
         .collect(Collectors.toList());
   }
 
+  @Transactional(readOnly = true)
   public SkillDto getSkill(Long id) {
     Skill skill = skillDao.findById(id)
         .orElseThrow(() -> new ContactApiException("No skill found with this ID : " + id));
     return skillMapper.mapToSkillDto(skill);
   }
 
-  @Transactional
+
   public SkillDto update(Long id, SkillDto skillDto) {
     Optional<Skill> skill = skillDao.findById(id);
     if (skill.isPresent()) {
@@ -67,7 +69,7 @@ public class SkillService {
     return skillDto;
   }
 
-  @Transactional
+
   public void delete(Long id) {
     Skill skill = skillDao.findById(id).orElseThrow(
         () -> new ContactApiException("Can not delete ! no skill found with this ID : " + id));

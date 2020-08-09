@@ -29,7 +29,6 @@ public class Skill implements Serializable {
   @NotBlank(message = "Please provide a valid Skill Name !")
   private String name;
 
-  @NotBlank
   @Enumerated(EnumType.STRING)
   private Level level;
 

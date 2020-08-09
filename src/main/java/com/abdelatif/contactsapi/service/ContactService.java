@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @AllArgsConstructor
 @Slf4j
+@Transactional
 public class ContactService {
 
   private final ContactDao contactDao;
@@ -26,7 +27,7 @@ public class ContactService {
   private final AuthService authService;
 
 
-  @Transactional
+
   public ContactDto save(ContactDto contactDto) {
     Contact save = contactDao.save(contactMapper.mapToContact(contactDto));
     UserApi currentUser = authService.getCurrentUser();
@@ -44,13 +45,14 @@ public class ContactService {
         .collect(Collectors.toList());
   }
 
+  @Transactional(readOnly = true)
   public ContactDto getContact(Long id) {
     Contact contact = contactDao.findById(id)
         .orElseThrow(() -> new ContactApiException("No contact found with this ID : " + id));
     return contactMapper.mapToContactDto(contact);
   }
 
-  @Transactional
+
   public ContactDto update(Long id, ContactDto contactDto) {
     Optional<Contact> contact = contactDao.findById(id);
     if (contact.isPresent()) {
@@ -62,7 +64,7 @@ public class ContactService {
     return contactDto;
   }
 
-  @Transactional
+
   public void delete(Long id) {
     Optional<UserApi> userApiSelected = userApiDao.findByContact_Id(id);
     if (userApiSelected.isPresent()) {
