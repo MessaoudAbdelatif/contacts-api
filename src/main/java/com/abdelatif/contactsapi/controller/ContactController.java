@@ -3,7 +3,6 @@ package com.abdelatif.contactsapi.controller;
 import com.abdelatif.contactsapi.dto.ContactDto;
 import com.abdelatif.contactsapi.service.ContactService;
 import java.util.List;
-import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -26,7 +25,7 @@ public class ContactController {
   private final ContactService contactService;
 
   @PostMapping
-  public ResponseEntity<ContactDto> createContact(@RequestBody @Valid ContactDto contactDto) {
+  public ResponseEntity<ContactDto> createContact(@RequestBody ContactDto contactDto) {
     return ResponseEntity
         .status(HttpStatus.CREATED)
         .body(contactService.save(contactDto));
