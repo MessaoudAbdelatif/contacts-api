@@ -56,7 +56,7 @@ public class ContactService {
     if (contact.isPresent()) {
       contactDto.setId(id);
       contactDao.save(contactMapper.mapToContact(contactDto));
-    } else {
+    } else ^^
       throw new ContactApiException("No contact found with this ID : " + id);
     }
     return contactDto;

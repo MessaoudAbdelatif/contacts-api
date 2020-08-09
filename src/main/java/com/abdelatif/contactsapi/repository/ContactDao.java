@@ -9,4 +9,5 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface ContactDao extends JpaRepository<Contact, Long> {
 
+
 }
