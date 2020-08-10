@@ -38,8 +38,16 @@ public class SkillService {
 
 
   public SkillDto save(SkillDto skillDto) {
-    Skill saveSkill = skillDao.save(skillMapper.mapToSkill(skillDto));
-    return skillMapper.mapToSkillDto(saveSkill);
+    Optional<Skill> skillFounded = skillDao
+        .findByNameAndLevel(skillDto.getName(), skillDto.getLevel());
+    if (skillFounded.isPresent()) {
+      throw new ContactApiException(
+          "The skill : " + skillDto.getName().toUpperCase() + " at the level : " + skillDto.getLevel().getValue().toUpperCase()
+              + " already exists !");
+    } else {
+      Skill saveSkill = skillDao.save(skillMapper.mapToSkill(skillDto));
+      return skillMapper.mapToSkillDto(saveSkill);
+    }
   }
 
   @Transactional(readOnly = true)

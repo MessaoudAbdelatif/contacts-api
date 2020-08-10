@@ -25,4 +25,13 @@ public class ContactApiValidatorExceptionHandler {
         ZonedDateTime.now());
     return new ResponseEntity<>(contactApiValidatorException, HttpStatus.UNPROCESSABLE_ENTITY);
   }
+
+  @ExceptionHandler(value = {ContactApiException.class})
+  public ResponseEntity<Object> handleContactApiException(ContactApiException e){
+    ContactApiValidatorException contactApiValidatorException = new ContactApiValidatorException(
+        e.getMessage()
+        , HttpStatus.BAD_REQUEST,
+        ZonedDateTime.now());
+    return new ResponseEntity<>(contactApiValidatorException, HttpStatus.BAD_REQUEST);
+  }
 }
