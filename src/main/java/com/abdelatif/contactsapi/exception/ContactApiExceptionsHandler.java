@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class ContactApiValidatorExceptionHandler {
+public class ContactApiExceptionsHandler {
 
   @ExceptionHandler(value = {ConstraintViolationException.class})
   public ResponseEntity<Object> handleContactApiValidatorException(ConstraintViolationException e) {

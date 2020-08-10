@@ -1,10 +1,10 @@
 package com.abdelatif.contactsapi.service;
 
-import com.abdelatif.contactsapi.exception.ContactApiException;
 import com.abdelatif.contactsapi.dto.AuthenticationResponseDto;
 import com.abdelatif.contactsapi.dto.LoginRequestDto;
 import com.abdelatif.contactsapi.dto.NotificationEmailDto;
 import com.abdelatif.contactsapi.dto.RegisterRequestDto;
+import com.abdelatif.contactsapi.exception.ContactApiException;
 import com.abdelatif.contactsapi.model.UserApi;
 import com.abdelatif.contactsapi.model.VerificationToken;
 import com.abdelatif.contactsapi.repository.UserApiDao;
@@ -71,7 +71,7 @@ public class AuthService {
     fetchUserAndEnable(verificationToken.get());
   }
 
-  @Transactional
+
   public void fetchUserAndEnable(VerificationToken verificationToken) {
     String username = verificationToken.getUserApi().getUsername();
 
