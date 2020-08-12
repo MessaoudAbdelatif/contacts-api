@@ -55,9 +55,7 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-thymeleaf</artifactId>
     </dependency>
-
     <!-- JWT dependencies start -->
-
     <dependency>
       <groupId>io.jsonwebtoken</groupId>
       <artifactId>jjwt-api</artifactId>
@@ -75,7 +73,6 @@
       <version>0.10.5</version>
     </dependency>
     <!-- JWT dependencies end -->
-
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
@@ -124,7 +121,14 @@
       <artifactId>springfox-swagger-ui</artifactId>
       <version>2.9.2</version>
     </dependency>
+    <!-- JSON PATH useful for testing RestApi response content-->
+    <dependency>
+      <groupId>com.jayway.jsonpath</groupId>
+      <artifactId>json-path</artifactId>
+      <version>2.4.0</version>
+    </dependency>
   </dependencies>
+
 
   <build>
     <plugins>

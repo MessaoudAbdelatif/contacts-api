@@ -2,6 +2,7 @@ package com.abdelatif.contactsapi.controller;
 
 import com.abdelatif.contactsapi.dto.ContactDto;
 import com.abdelatif.contactsapi.service.ContactService;
+import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,7 @@ public class ContactController {
 
   private final ContactService contactService;
 
+  @ApiOperation(value = "Create new contact")
   @PostMapping
   public ResponseEntity<ContactDto> createContact(@RequestBody ContactDto contactDto) {
     return ResponseEntity
@@ -31,6 +33,7 @@ public class ContactController {
         .body(contactService.save(contactDto));
   }
 
+  @ApiOperation(value = "Get all the contacts")
   @GetMapping
   public ResponseEntity<List<ContactDto>> getAllContacts() {
     return ResponseEntity
@@ -38,6 +41,7 @@ public class ContactController {
         .body(contactService.getAll());
   }
 
+  @ApiOperation(value = "Get a contact by Id")
   @GetMapping("/{id}")
   public ResponseEntity<ContactDto> getContact(@PathVariable Long id) {
     return ResponseEntity
@@ -46,6 +50,7 @@ public class ContactController {
 
   }
 
+  @ApiOperation(value = "Update an available contact -fetch by Id")
   @PutMapping("/{id}")
   public ResponseEntity<ContactDto> updateContact(@PathVariable Long id,
       @RequestBody ContactDto contactDto) {
@@ -54,6 +59,7 @@ public class ContactController {
         .body(contactService.update(id, contactDto));
   }
 
+  @ApiOperation(value = "Remove an available contact -fetch by Id")
   @DeleteMapping("/{id}")
   public ResponseEntity<String> deleteContact(@PathVariable Long id) {
     contactService.delete(id);

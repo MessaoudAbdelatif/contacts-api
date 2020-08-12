@@ -42,7 +42,7 @@ public class SkillController {
         .body(skillService.getSkill(id));
   }
 
-  @ApiOperation(value = "Post new skill")
+  @ApiOperation(value = "Create new skill")
   @PostMapping()
   public ResponseEntity<SkillDto> createSkill(@RequestBody SkillDto skillDto) {
     return ResponseEntity
@@ -50,7 +50,7 @@ public class SkillController {
         .body(skillService.save(skillDto));
   }
 
-  @ApiOperation(value = "Post new skill for the current user")
+  @ApiOperation(value = "Create new skill for the current user")
   @PostMapping("/new-skill")
   public ResponseEntity<SkillDto> createSkillForCurrentContact(@RequestBody SkillDto skillDto) {
     return ResponseEntity
@@ -58,7 +58,7 @@ public class SkillController {
         .body(skillService.saveForCurrentContact(skillDto));
   }
 
-  @ApiOperation(value = "Put change in a specific skill")
+  @ApiOperation(value = "Update an available skill -fetch by Id")
   @PutMapping("/{id}")
   public ResponseEntity<SkillDto> updateSkill(@PathVariable Long id,
       @RequestBody SkillDto skillDto) {
@@ -67,7 +67,7 @@ public class SkillController {
         .body(skillService.update(id, skillDto));
   }
 
-  @ApiOperation(value = "Delete a skill")
+  @ApiOperation(value = "Remove an available skill -fetch by Id")
   @DeleteMapping("/{id}")
   public ResponseEntity<String> deleteSkill(@PathVariable Long id) {
     skillService.delete(id);
