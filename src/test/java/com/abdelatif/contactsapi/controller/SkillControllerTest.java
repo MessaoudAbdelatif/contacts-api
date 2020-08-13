@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.abdelatif.contactsapi.dto.SkillDto;
-import com.abdelatif.contactsapi.service.SkillService;
+import com.abdelatif.contactsapi.service.implementation.SkillServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +42,7 @@ class SkillControllerTest {
   SkillDto validSkill;
 
   @MockBean
-  SkillService skillService;
+  SkillServiceImpl skillService;
 
   @Autowired
   MockMvc mockMvc;

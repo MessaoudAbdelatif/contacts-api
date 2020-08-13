@@ -1,4 +1,4 @@
-package com.abdelatif.contactsapi.service;
+package com.abdelatif.contactsapi.service.implementation;
 
 import com.abdelatif.contactsapi.dto.ContactDto;
 import com.abdelatif.contactsapi.dto.Mapper.ContactMapper;
@@ -7,6 +7,7 @@ import com.abdelatif.contactsapi.model.Contact;
 import com.abdelatif.contactsapi.model.UserApi;
 import com.abdelatif.contactsapi.repository.ContactDao;
 import com.abdelatif.contactsapi.repository.UserApiDao;
+import com.abdelatif.contactsapi.service.contract.ContactService;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -19,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @AllArgsConstructor
 @Slf4j
 @Transactional
-public class ContactService {
+public class ContactServiceImpl implements ContactService {
 
   private final ContactDao contactDao;
   private final UserApiDao userApiDao;

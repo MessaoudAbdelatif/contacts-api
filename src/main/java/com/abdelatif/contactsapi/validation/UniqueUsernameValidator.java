@@ -1,19 +1,29 @@
 package com.abdelatif.contactsapi.validation;
 
+import com.abdelatif.contactsapi.service.implementation.UserApiServiceImpl;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-
 public class UniqueUsernameValidator implements ConstraintValidator<UniqueUsername, String> {
+
+
+  private UserApiServiceImpl userApiService;
+
+
+  public UniqueUsernameValidator(UserApiServiceImpl userApiService) {
+    this.userApiService = userApiService;
+  }
+
+  String message;
+
 
   @Override
   public void initialize(UniqueUsername constraintAnnotation) {
-    String message = constraintAnnotation.message();
-
+    message = constraintAnnotation.message();
   }
 
   @Override
   public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
-    return false;
+    return userApiService.usernameAvailable(s);
   }
 }

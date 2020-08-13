@@ -1,7 +1,7 @@
 package com.abdelatif.contactsapi.controller;
 
 import com.abdelatif.contactsapi.dto.SkillDto;
-import com.abdelatif.contactsapi.service.SkillService;
+import com.abdelatif.contactsapi.service.implementation.SkillServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class SkillController {
 
-  private final SkillService skillService;
+  private final SkillServiceImpl skillService;
 
 
   @ApiOperation(value = "Get all the skills available")

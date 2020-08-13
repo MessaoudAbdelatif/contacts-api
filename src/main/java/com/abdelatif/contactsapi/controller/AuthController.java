@@ -3,7 +3,8 @@ package com.abdelatif.contactsapi.controller;
 import com.abdelatif.contactsapi.dto.AuthenticationResponseDto;
 import com.abdelatif.contactsapi.dto.LoginRequestDto;
 import com.abdelatif.contactsapi.dto.RegisterRequestDto;
-import com.abdelatif.contactsapi.service.AuthService;
+import com.abdelatif.contactsapi.service.implementation.AuthService;
+import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class AuthController {
   private final AuthService authService;
 
   @PostMapping("/signup")
-  public ResponseEntity<String> signup(@RequestBody RegisterRequestDto registerRequest) {
+  public ResponseEntity<String> signup(@RequestBody @Valid RegisterRequestDto registerRequest) {
     authService.signup(registerRequest);
     return new ResponseEntity<>("User Registration Successful", HttpStatus.OK);
   }

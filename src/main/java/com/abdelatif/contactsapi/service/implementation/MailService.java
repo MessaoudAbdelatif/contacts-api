@@ -1,4 +1,4 @@
-package com.abdelatif.contactsapi.service;
+package com.abdelatif.contactsapi.service.implementation;
 
 import com.abdelatif.contactsapi.exception.ContactApiException;
 import com.abdelatif.contactsapi.dto.NotificationEmailDto;

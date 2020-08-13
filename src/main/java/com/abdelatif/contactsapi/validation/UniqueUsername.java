@@ -1,20 +1,17 @@
 package com.abdelatif.contactsapi.validation;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-
-import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-@Target({FIELD})
-@Retention(RUNTIME)
+@Target({ElementType.METHOD, ElementType.FIELD})
+@Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = UniqueUsernameValidator.class)
-@Documented
 public @interface UniqueUsername {
-  String message() default "{ValidPhoneNum.message}";
+  String message() default "{UniqueUsername.message}";
 
   Class<?>[] groups() default {};
 

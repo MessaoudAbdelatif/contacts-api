@@ -18,11 +18,11 @@ public class PhoneNumValidator implements ConstraintValidator<ValidPhoneNum, Str
 
   @Override
   public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
-    PhoneNumberUtil nomberUtil = PhoneNumberUtil.getInstance();
+    PhoneNumberUtil numberUtil = PhoneNumberUtil.getInstance();
     try {
-      PhoneNumber sPhone = nomberUtil
+      PhoneNumber sPhone = numberUtil
           .parse(s, "CH");  // For Swiss phone number (waiting for functional business details...)
-      return nomberUtil.isPossibleNumber(sPhone);
+      return numberUtil.isPossibleNumber(sPhone);
     } catch (NumberParseException e) {
       log.error("NumberParseException was thrown: " + e.toString());
     }

@@ -1,4 +1,4 @@
-package com.abdelatif.contactsapi.service;
+package com.abdelatif.contactsapi.service.implementation;
 
 import static java.util.Collections.singletonList;
 
@@ -26,16 +26,18 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     Optional<UserApi> userOptional = userApiDao.findByUsername(username);
     UserApi user = userOptional
-        .orElseThrow(() -> new UsernameNotFoundException("No user found with username : " + username));
+        .orElseThrow(
+            () -> new UsernameNotFoundException("No user found with username : " + username));
 
     return new org.springframework.security
         .core.userdetails.User(user.getUsername(), user.getPassword(),
         user.isEnable(), true, true,
         true, getAuthorities("USER"));
   }
+
   private Collection<? extends GrantedAuthority> getAuthorities(String role) {
     return singletonList(new SimpleGrantedAuthority(role));
   }
 
-  }
+}
 

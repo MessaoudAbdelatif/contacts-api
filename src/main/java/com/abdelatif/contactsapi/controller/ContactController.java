@@ -1,7 +1,7 @@
 package com.abdelatif.contactsapi.controller;
 
 import com.abdelatif.contactsapi.dto.ContactDto;
-import com.abdelatif.contactsapi.service.ContactService;
+import com.abdelatif.contactsapi.service.implementation.ContactServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class ContactController {
 
-  private final ContactService contactService;
+  private final ContactServiceImpl contactService;
 
   @ApiOperation(value = "Create new contact")
   @PostMapping

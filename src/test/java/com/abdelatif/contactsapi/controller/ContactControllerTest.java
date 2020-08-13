@@ -13,7 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.abdelatif.contactsapi.dto.ContactDto;
-import com.abdelatif.contactsapi.service.ContactService;
+import com.abdelatif.contactsapi.service.implementation.ContactServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +40,7 @@ class ContactControllerTest {
   ContactDto validContact;
 
   @MockBean
-  ContactService contactService;
+  ContactServiceImpl contactService;
 
   @Autowired
   MockMvc mockMvc;
