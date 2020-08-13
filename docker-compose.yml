@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  contacts-postgres:
+    image: postgres:latest
+    container_name: contacts-postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+    - 5431:5432 # Set an available free port depending of your env setting !
+    environment:
+      POSTGRES_DB: db_contact
+      POSTGRES_USER: admin_db_contact
+      POSTGRES_PASSWORD: 1234
+
+  contacts-api:
+    image: dzdevsoft/contacts-api:2
+    container_name: contacts-api
+    environment:
+      - DB_SERVER=contacts-postgres
+      - POSTGRES_DB=db_contact
+      - POSTGRES_USERNAME=admin_db_contact
+      - POSTGRES_PASSWORD=1234
+      - EMAIL_HOST=smtp4dev
+      - EMAIL_PORT=25
+    ports:
+    - 8080:8080
+    - 2525:2525
+    links:
+      - contacts-postgres
+      - smtp4dev
+
+  smtp4dev:
+    image: rnwood/smtp4dev:latest
+    ports:
+      - 3000:80
+
+volumes:
+  postgres-data:
