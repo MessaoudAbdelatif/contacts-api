@@ -2,8 +2,10 @@ package com.abdelatif.contactsapi.controller;
 
 import com.abdelatif.contactsapi.dto.AuthenticationResponseDto;
 import com.abdelatif.contactsapi.dto.LoginRequestDto;
+import com.abdelatif.contactsapi.dto.RefreshTokenRequest;
 import com.abdelatif.contactsapi.dto.RegisterRequestDto;
 import com.abdelatif.contactsapi.service.implementation.AuthService;
+import com.abdelatif.contactsapi.service.implementation.RefreshTokenServiceImpl;
 import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
   private final AuthService authService;
+  private final RefreshTokenServiceImpl refreshTokenServiceImpl;
+
 
   @PostMapping("/signup")
   public ResponseEntity<String> signup(@RequestBody @Valid RegisterRequestDto registerRequest) {
@@ -37,5 +41,18 @@ public class AuthController {
   @PostMapping("/login")
   public AuthenticationResponseDto login(@RequestBody LoginRequestDto loginRequestDto) {
     return authService.login(loginRequestDto);
+  }
+
+  @PostMapping("refresh/token")
+  public AuthenticationResponseDto refreshTokens(
+      @Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
+    return authService.refreshToken(refreshTokenRequest);
+  }
+
+  @PostMapping("/logout")
+  public ResponseEntity<String> logout(
+      @Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
+    refreshTokenServiceImpl.deleteRefreshToken(refreshTokenRequest.getRefreshToken());
+    return ResponseEntity.status(HttpStatus.OK).body("Refresh Token deleted successfully !");
   }
 }

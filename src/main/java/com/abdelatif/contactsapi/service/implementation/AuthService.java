@@ -3,6 +3,7 @@ package com.abdelatif.contactsapi.service.implementation;
 import com.abdelatif.contactsapi.dto.AuthenticationResponseDto;
 import com.abdelatif.contactsapi.dto.LoginRequestDto;
 import com.abdelatif.contactsapi.dto.NotificationEmailDto;
+import com.abdelatif.contactsapi.dto.RefreshTokenRequest;
 import com.abdelatif.contactsapi.dto.RegisterRequestDto;
 import com.abdelatif.contactsapi.exception.ContactApiException;
 import com.abdelatif.contactsapi.model.UserApi;
@@ -34,6 +35,8 @@ public class AuthService {
   private final MailService mailService;
   private final AuthenticationManager authenticationManager;
   private final JwtProvider jwtProvider;
+  private final RefreshTokenServiceImpl refreshTokenServiceImpl;
+
 
 
   @Transactional
@@ -88,8 +91,12 @@ public class AuthService {
             loginRequestDto.getPassword()));
     SecurityContextHolder.getContext().setAuthentication(authenticate);
     String token = jwtProvider.generateToken(authenticate);
-    return new AuthenticationResponseDto(token, loginRequestDto.getUsername());
-
+    return AuthenticationResponseDto.builder()
+        .authenticationToken(token)
+        .refreshToken(refreshTokenServiceImpl.generateRefreshToken().getToken())
+        .expiresAt(Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis()))
+        .username(loginRequestDto.getUsername())
+        .build();
   }
 
   @Transactional(readOnly = true)
@@ -99,5 +106,16 @@ public class AuthService {
     return userApiDao.findByUsername(principal.getUsername())
         .orElseThrow(
             () -> new ContactApiException("Username not found - " + principal.getUsername()));
+  }
+
+  public AuthenticationResponseDto refreshToken(RefreshTokenRequest refreshTokenRequest) {
+    refreshTokenServiceImpl.validateRefreshToken(refreshTokenRequest.getRefreshToken()); // can throw an error
+    String token = jwtProvider.generateTokenWithUsername(refreshTokenRequest.getUsername());
+    return AuthenticationResponseDto.builder()
+        .authenticationToken(token)
+        .refreshToken(refreshTokenRequest.getRefreshToken())
+        .expiresAt(Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis()))
+        .username(refreshTokenRequest.getUsername())
+        .build();
   }
 }
