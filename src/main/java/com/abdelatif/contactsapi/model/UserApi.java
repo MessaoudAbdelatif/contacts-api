@@ -34,7 +34,6 @@ public class UserApi implements Serializable {
   private Long id;
 
   @NotBlank(message = "Valid username is required !")
-  //@UniqueUsername(message = "Sorry this username is already used !")
   @Column(unique = true, updatable = false)
   private String username;
 

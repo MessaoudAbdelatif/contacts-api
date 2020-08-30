@@ -11,6 +11,7 @@ import com.abdelatif.contactsapi.model.VerificationToken;
 import com.abdelatif.contactsapi.repository.UserApiDao;
 import com.abdelatif.contactsapi.repository.VerificationTokenDao;
 import com.abdelatif.contactsapi.security.JwtProvider;
+import com.abdelatif.contactsapi.service.contract.UserApiService;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Optional;
@@ -36,28 +37,31 @@ public class AuthService {
   private final AuthenticationManager authenticationManager;
   private final JwtProvider jwtProvider;
   private final RefreshTokenServiceImpl refreshTokenServiceImpl;
-
+  private final UserApiService userApiService;
 
 
   @Transactional
   public void signup(RegisterRequestDto registerRequestDto) {
-    UserApi userApi = new UserApi();
-    userApi.setUsername(registerRequestDto.getUsername());
-    userApi.setEmail(registerRequestDto.getEmail());
-    userApi.setPassword(passwordEncoder.encode(registerRequestDto.getPassword()));
-    userApi.setCreatedDate(Timestamp.from(Instant.now()));
-    userApi.setEnable(false);
-    userApiDao.save(userApi);
-    String token = generateVerificationToken(userApi);
+    if (userApiService.usernameNotAvailable(registerRequestDto.getUsername())) {
+      throw new ContactApiException("This username is already used please choose another one !");
+    } else {
+      UserApi userApi = new UserApi();
+      userApi.setUsername(registerRequestDto.getUsername());
+      userApi.setEmail(registerRequestDto.getEmail());
+      userApi.setPassword(passwordEncoder.encode(registerRequestDto.getPassword()));
+      userApi.setCreatedDate(Timestamp.from(Instant.now()));
+      userApi.setEnable(false);
+      userApiDao.save(userApi);
+      String token = generateVerificationToken(userApi);
 
-    mailService.sendEmail(
-        new NotificationEmailDto("Please activate your Account",
-            userApi.getEmail(),
-            "Thank you for signing up to Contact-API ," +
-                "please click on the link below to activate your account : " +
-                "http://localhost:8080/api/auth/accountVerification/" + token));
+      mailService.sendEmail(
+          new NotificationEmailDto("Please activate your Account",
+              userApi.getEmail(),
+              "Thank you for signing up to Contact-API ," +
+                  "please click on the link below to activate your account : " +
+                  "http://localhost:8080/api/auth/accountVerification/" + token));
+    }
   }
-
   public String generateVerificationToken(UserApi userApi) {
     String token = UUID.randomUUID().toString();
     VerificationToken verificationToken = new VerificationToken();
@@ -109,7 +113,8 @@ public class AuthService {
   }
 
   public AuthenticationResponseDto refreshToken(RefreshTokenRequest refreshTokenRequest) {
-    refreshTokenServiceImpl.validateRefreshToken(refreshTokenRequest.getRefreshToken()); // can throw an error
+    refreshTokenServiceImpl
+        .validateRefreshToken(refreshTokenRequest.getRefreshToken()); // can throw an error
     String token = jwtProvider.generateTokenWithUsername(refreshTokenRequest.getUsername());
     return AuthenticationResponseDto.builder()
         .authenticationToken(token)

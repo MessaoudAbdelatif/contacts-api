@@ -5,5 +5,5 @@ package com.abdelatif.contactsapi.service.contract;
  * */
 public interface UserApiService {
 
-  boolean usernameAvailable(String username);
+  boolean usernameNotAvailable(String username);
 }

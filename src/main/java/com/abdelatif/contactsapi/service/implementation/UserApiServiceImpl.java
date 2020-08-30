@@ -15,7 +15,7 @@ public class UserApiServiceImpl implements UserApiService {
 
   private final UserApiDao userApiDao;
 
-  public boolean usernameAvailable(String username) {
+  public boolean usernameNotAvailable(String username) {
     return userApiDao.findByUsername(username).isPresent();
   }
 }

@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 public class RegisterRequestDto {
 
   private String email;
- // @UniqueUsername(message = "Sorry this username is already used !")
   private String username;
   private String password;
 }
